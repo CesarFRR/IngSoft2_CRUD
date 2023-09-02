@@ -1,16 +1,12 @@
 import mysql.connector
 
-# database = mysql.connector.connect(
-#     host='localhost',
-#     user='root',
-#     password='',
-#     database='crud_db'
-# )
+config = {
+    'user': 'root',
+    'password': '9wlWHkKpVCyefMpfQLCS',
+    'host': 'containers-us-west-148.railway.app',
+    'database': 'railway',
+    'port': 5958  # Puerto predeterminado de MySQL
+}
+database = mysql.connector.connect(**config)
 
-
-database = mysql.connector.connect(
-    host='localhost',
-    user='root',
-    password='elterax100',
-    database='lab_crud'
-)
+print('BBDD conectada!!')
