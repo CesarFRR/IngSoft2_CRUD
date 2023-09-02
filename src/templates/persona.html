@@ -15,7 +15,7 @@
 </head>
 
 <body>
-
+    <a href="{{ url_for('home') }}" class="btn btn-primary mb-3 mt-4">Inicio</a>
     <h1 class="text-center mt-5 mb-5 text-primary">Gestión de personas</h1>
 
     <div class="container">
@@ -40,11 +40,11 @@
                             <input type="date" class="form-control mb-3" name="nacimiento">
                         </div>
                         <div class="col">
-                            <label for="selectBox" class="form-label">Sexo</label>
-                            <select class="form-select" id="selectBox">
-                                <option value="M">Masculino</option>
-                                <option value="F">Femenino</option>
-                                <option value="NB">No binario</option>
+                            <label for="sexo">Sexo</label>
+                            <select class="form-select" id="sexo" name="sexo">
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                                <option value="No binario">No binario</option>
                             </select>
                         </div>
                         <div class="col">
@@ -52,8 +52,8 @@
                             <input type="text" class="form-control mb-3" name="tel_cel">
                         </div>
                         <div class="col">
-                            <label for='tel_cel'>ID de vivienda actual</label>
-                            <input type="text" class="form-control mb-3" name="tel_cel">
+                            <label for='vivienda_actual'>ID de vivienda actual</label>
+                            <input type="text" class="form-control mb-3" name="vivienda_actual">
                         </div>
                     </div>
                     <div class="text-center">
@@ -125,9 +125,9 @@
                                                 {% set sexos = {'Masculino':'M', 'Femenino':'F', 'No binario':'NB'} %}
                                                 {% for s in sexos %}
                                                     {% if d.sexo == s %}
-                                                        <option value="{{ sexos[s] }}" selected>{{ s }}</option>
+                                                        <option value="{{ s }}" selected>{{ s }}</option>
                                                     {% else %}
-                                                        <option value="{{ sexos[s] }}">{{ s }}</option>
+                                                        <option value="{{s}}">{{ s }}</option>
                                                     {% endif %}
                                                 {% endfor %}
                                             </select>
@@ -137,7 +137,7 @@
 
 
                                             <label for='vivienda_actual'>vivienda actual</label>
-                                            <input type="text" class="form-control mb-3" name="vivienda_actual" value="{{d.vivienda_actual}}">
+                                            <input type="text" class="form-control mb-3" name="vivienda_actual" value="{{d.id_vivienda_actual}}">
 
                                     </div>
                                     <div class="modal-footer">

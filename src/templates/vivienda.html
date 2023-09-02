@@ -11,7 +11,7 @@
 
 </head>
 <body>
-
+    <a href="{{ url_for('home') }}" class="btn btn-primary mb-3 mt-4">Inicio</a>
     <h1 class="text-center mt-5 mb-5 text-primary">Gestión de viviendas</h1>
 
     <div class="container">
@@ -21,19 +21,19 @@
                     <div class="row mb-3">
                         <div class="col">
                             <label>Dirección</label>
-                            <input type="text" class="form-control mb-3" name="username">
+                            <input type="text" class="form-control mb-3" name="direccion">
                         </div>
                         <div class="col">
                             <label>Municipio</label>
-                            <input type="text" class="form-control mb-3" name="name">
+                            <input type="text" class="form-control mb-3" name="id_municipio">
                         </div>
                         <div class="col">
                             <label for="">Capacidad</label>
-                            <input type="text" class="form-control mb-3" name="name">
+                            <input type="text" class="form-control mb-3" name="capacidad">
                         </div>
                         <div class="col">
                             <label>Niveles</label>
-                            <input type="date" class="form-control mb-3" name="password">
+                            <input type="number" class="form-control mb-3" name="niveles">
                         </div>
                         <div class="col">
                             <button class="btn btn-primary mb-3 mt-4" type="submit">Guardar</button>
@@ -81,16 +81,20 @@
                                 </div>
                                 <div class="modal-body">
                                     <form action="/vivienda_edit/{{d.id}}" method="post">
-                                        <label>id</label>
-                                        <input type="text" class="form-control mb-3" name="username" value="{{d.username}}">
-                                        <label>Name</label>
-                                        <input type="text" class="form-control mb-3" name="name" value="{{d.name}}">
-                                        <label>Password</label>
-                                        <input type="text" class="form-control mb-3" name="password" value="{{d.password}}">
+                                        <label for="id" >id</label>
+                                        <input type="number" class="form-control mb-3" name="id" value="{{d.id}}" readonly>
+                                        <label for="direccion">Dirección</label>
+                                        <input type="text" class="form-control mb-3" name="direccion" value="{{d.direccion}}">
+                                        <label for="municipio">Municipio</label>
+                                        <input type="number" class="form-control mb-3" name="id_municipio" value="{{d.id_municipio}}">
+                                        <label for="capacidad">Capacidad</label>
+                                        <input type="number" class="form-control mb-3" name="capacidad" value="{{d.capacidad}}">
+                                        <label for="niveles">Niveles</label>
+                                        <input type="number" class="form-control mb-3" name="niveles" value="{{d.niveles}}">
                                   
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="submit" class="btn btn-primary">Save changes</button>
+                                  <button type="submit" class="btn btn-primary">Guardar cambios</button>
                                 </div>
                                 </form>
                               </div>

@@ -51,7 +51,7 @@
 justify-content: center;">
             <div class="">
                 <label for="id" class="">Ingrese su numero de documento</label>
-                <input type="text" name="id" id="id_doc">
+                <input type="text" name="id" id="id_doc" autocomplete="off">
             </div>
 
 
@@ -78,7 +78,7 @@ justify-content: center;">
         function redirigir(pagina) {
             var dato = document.getElementById('id_doc').value;
             if(dato){
-                window.location.href = pagina + "id=" + encodeURIComponent(dato);
+                window.location.href = pagina + "" + encodeURIComponent(dato);
             }
             
         }
