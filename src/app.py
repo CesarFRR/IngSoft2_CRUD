@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Flask, render_template, request, redirect, url_for, g
+from flask import Flask, render_template, request, redirect, url_for
 import os
 import database as db
 
@@ -8,50 +8,9 @@ template_dir = os.path.join(template_dir, 'src', 'templates')
 
 app = Flask(__name__, template_folder = template_dir)
 
-
-
-
 #Rutas de la aplicación
 @app.route('/')
 def home(): return render_template('index.html')
-
-# #Ruta para guardar usuarios en la bdd
-# @app.route('/user', methods=['POST'])
-# def addUser():
-#     username = request.form['username']
-#     name = request.form['name']
-#     password = request.form['password']
-
-#     if username and name and password:
-#         cursor = db.database.cursor()
-#         sql = "INSERT INTO users (username, name, password) VALUES (%s, %s, %s)"
-#         data = (username, name, password)
-#         cursor.execute(sql, data)
-#         db.database.commit()
-#     return redirect(url_for('home'))
-
-# @app.route('/delete/<string:id>')
-# def delete(id):
-#     cursor = db.database.cursor()
-#     sql = "DELETE FROM users WHERE id=%s"
-#     data = (id,)
-#     cursor.execute(sql, data)
-#     db.database.commit()
-#     return redirect(url_for('home'))
-
-# @app.route('/edit/<string:id>', methods=['POST'])
-# def edit(id):
-#     username = request.form['username']
-#     name = request.form['name']
-#     password = request.form['password']
-
-#     if username and name and password:
-#         cursor = db.database.cursor()
-#         sql = "UPDATE users SET username = %s, name = %s, password = %s WHERE id = %s"
-#         data = (username, name, password, id)
-#         cursor.execute(sql, data)
-#         db.database.commit()
-#     return redirect(url_for('home'))
 
 @app.route('/persona')
 def persona():
@@ -118,7 +77,7 @@ def persona_delete(id):
     cursor.execute(sql, data)
     db.database.commit()
     return redirect(url_for('persona'))
- 
+
 
 @app.route('/vivienda')
 def vivienda():
@@ -132,7 +91,7 @@ def vivienda():
         print(record)
         insertObject.append(dict(zip(columnNames,record)))
     cursor.close()
-    
+
     return render_template('vivienda.html', data=insertObject)
 @app.route('/vivienda_add', methods=['POST'])
 def vivienda_add():
@@ -187,7 +146,7 @@ def municipio():
     for record in myresult:
         insertObject.append(dict(zip(columnNames, record)))
     cursor.close()
-    
+
     return render_template('municipio.html', data=insertObject)
 
 @app.route('/municipio_add', methods=['POST'])
@@ -201,8 +160,8 @@ def municipio_add():
         cursor.execute(sql, data)
         db.database.commit()
     return redirect(url_for('municipio'))
-    
-    
+
+
 @app.route('/municipio_edit/<string:id>', methods=['POST'])
 def municipio_edit(id):
     new_id = int(request.form['id'])
@@ -244,7 +203,7 @@ def posesiones(id):
     for record in myresult:
         insertObject.append(dict(zip(columnNames, record)))
     cursor.close()
-    
+
     return render_template('posesion.html', data=insertObject, id=id)
 
 @app.route('/posesiones_add', methods=['POST'])
@@ -264,7 +223,7 @@ def posesiones_add():
     return redirect(url_for('posesiones', id=id_persona))
 
 
-    
+
 @app.route('/posesiones_edit/<string:id>', methods=['POST'])
 def posesiones_edit(id):
     id_persona = int(request.form['id_persona'])
@@ -299,14 +258,14 @@ def cdf(id):
         data=(id,id)
         cursor.execute(q, data)
         myresult = cursor.fetchall()
-        
+
     except Exception as e:
         print('ERROR SQL: ---> ', e)
         return render_template('index.html')
-            
+
     #Convertir los datos a diccionario
     insertObject = []
-    
+
     columnNames = [column[0] for column in cursor.description]
     for record in myresult:
         insertObject.append(dict(zip(columnNames, record)))
@@ -320,7 +279,7 @@ def cdf_add():
     id_vivienda = int(request.form['id_cdf'])
     fecha_registro =  datetime.now().strftime('%Y-%m-%d')
     try:
-            
+
         if all(x for x in request.form.values()):
             cursor = db.database.cursor()
             sql = "INSERT INTO cdf (id_persona, id_cdf, fecha_registro) VALUES (%s, %s, %s)"
@@ -363,4 +322,4 @@ def cdf_delete(id_r, id_p):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(port=5000)
