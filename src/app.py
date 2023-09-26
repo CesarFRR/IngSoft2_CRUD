@@ -1,8 +1,4 @@
-from ast import Try
 from datetime import datetime
-from itertools import count
-from sys import exception
-from webbrowser import get
 from flask import Flask, render_template, request, redirect, url_for
 import os
 import database as db
