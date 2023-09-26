@@ -85,9 +85,13 @@ justify-content: center;">
         function redirigir(pagina) {
             var dato = document.getElementById('id_doc').value;
             if (dato) {
-                window.location.href = pagina + "" + encodeURIComponent(dato);
+                try {
+                    window.location.href = pagina + "" + encodeURIComponent(dato);
+                }
+                catch (err) {
+                    console.log("redireccionamiento no fue posible");
+                }
             }
-
         }
     </script>
 </body>
