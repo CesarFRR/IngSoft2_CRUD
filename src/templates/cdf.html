@@ -95,10 +95,10 @@
                                         <form action="/cdf_edit/{{d.id}}" method="post">
                                             <label for="id"># Registro</label>
                                             <input type="text" class="form-control mb-3" name="id" value="{{d.id}}"
-                                                disabled>
+                                                readonly>
                                             <label for="id_persona">ID Persona: {{d.nombre_persona1}}</label>
                                             <input type="text" class="form-control mb-3" name="id_persona"
-                                                value="{{d.id_persona}}" disabled>
+                                                value="{{d.id_persona}}" readonly>
                                             <label for="id_cdf">Documento de Cabeza de familia:
                                                 {{d.nombre_persona2}}</label>
                                             <input class="form-control mb-3" type="number" name="id_cdf"

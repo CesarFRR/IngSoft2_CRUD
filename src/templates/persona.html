@@ -42,7 +42,7 @@
                         <div class="col">
                             <label for='t_doc'>Tipo de documento</label>
                             <select class="form-select" id="sexo" name="t_doc">
-                                <option value="none" selected disabled hidden> </option>
+                                <option value="none" selected readonly hidden> </option>
                                 <option value="CC">CC</option>
                                 <option value="CE">CE</option>
                                 <option value="Pasaporte">Pasaporte</option>
@@ -60,7 +60,7 @@
                     <div class="col">
                         <label for="sexo">Sexo</label>
                         <select class="form-select" id="sexo" name="sexo">
-                            <option value="none" selected disabled hidden> </option>
+                            <option value="none" selected readonly hidden> </option>
                             <option value="Masculino">Masculino</option>
                             <option value="Femenino">Femenino</option>
                             <option value="No binario">No binario</option>
@@ -127,12 +127,12 @@
                                     <form action="/persona_edit/{{d.id}}" method="POST">
                                         <label for='id'>ID</label>
                                         <input type="number" class="form-control mb-3" name="id" value="{{d.id}}"
-                                            disabled>
+                                            readonly>
 
 
                                         <label for='tipo_doc'>Tipo de documento</label>
                                         <input type="text" class="form-control mb-3" name="tipo_doc"
-                                            value="{{d.tipo_doc}}" disabled>
+                                            value="{{d.tipo_doc}}" readonly>
 
                                         <label for='nombre'>Nombre</label>
                                         <input type="text" class="form-control mb-3" name="nombre" value="{{d.nombre}}">
@@ -140,7 +140,7 @@
 
                                         <label for='fecha_nac'>Fecha de nacimiento</label>
                                         <input type="date" class="form-control mb-3" name="fecha_nac"
-                                            value="{{d.fecha_nac}}" disabled>
+                                            value="{{d.fecha_nac}}" readonly>
 
                                         <label for='sexo'>Sexo</label>
                                         <select class="form-select" id="selectBox" name="sexo">
