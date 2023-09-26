@@ -8,6 +8,14 @@ template_dir = os.path.join(template_dir, 'src', 'templates')
 
 app = Flask(__name__, template_folder = template_dir)
 
+def _SQLtoDict(SQLquery):
+    cursor = db.database.cursor()
+    cursor.execute(SQLquery)
+    myresult = cursor.fetchall()
+    columnNames = [column[0] for column in cursor.description]
+    cursor.close()
+    return [(dict(zip(columnNames,  [x if x!=None else " " for x in record]))) for record in myresult]
+    
 #Rutas de la aplicación
 @app.route('/')
 def home(): return render_template('index.html')
@@ -25,8 +33,6 @@ def persona():
         insertObject.append(dict(zip(columnNames,  [x if x!=None else " " for x in record])))
     cursor.close()
     return render_template('persona.html', data=insertObject)
-
-
 
 
 @app.route('/persona_add', methods=['POST'])
@@ -81,20 +87,16 @@ def persona_delete(id):
 
 @app.route('/vivienda')
 def vivienda():
-    cursor = db.database.cursor()
-    cursor.execute("SELECT * FROM viviendas")
-    myresult = cursor.fetchall()
-    #Convertir los datos a diccionario
-    insertObject = []
-    columnNames = [column[0] for column in cursor.description]
-    for record in myresult:
-        print(record)
-        insertObject.append(dict(zip(columnNames,record)))
-    cursor.close()
+    data = _SQLtoDict("SELECT v.*, m.nombre AS nombre_municipio FROM viviendas v LEFT JOIN municipios m ON v.id_municipio = m.id")
+    list_municipios = _SQLtoDict("SELECT * FROM municipios")
+    print(list_municipios,'\n\n', data)
+    return render_template('vivienda.html', list_municipios=list_municipios,data=data)
 
-    return render_template('vivienda.html', data=insertObject)
+
 @app.route('/vivienda_add', methods=['POST'])
 def vivienda_add():
+    #print('SE LLEGÓ A VIVIENDA-ADD!', request.form)
+    
     direccion = request.form['direccion']
     id_municipio = int(request.form['id_municipio'])
     capacidad = int(request.form['capacidad'])

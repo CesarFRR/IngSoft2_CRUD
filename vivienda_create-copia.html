@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear vivienda</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+</head>
+
+<body>
+
+    <a href="{{ url_for('home') }}" class="btn btn-primary m-3">Inicio</a>
+    <a href="{{ url_for('vivienda') }}" class="btn btn-primary m-3">Viviendas</a>
+    <h1 class="text-center mt-5 mb-5 text-primary">Gestión de viviendas</h1>
+
+    <div class="container">
+        <div class="card shadow">
+            <div class="card-body">
+                <form action="/vivienda_add" method="POST">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Dirección</label>
+                            <input type="text" class="form-control mb-3" name="direccion">
+                        </div>
+                        <div class="col">
+                            <label for="input_municipio_id">Municipio</label>
+                            <input type="text" style="display: none;" name="id_municipio" id="input_municipio_id">
+                            
+                            <div class="form-control mb-3" id="input_municipio"></div>
+                            
+                            <button type="button" class="btn btn-primary" onclick="abrirModal()">Seleccionar
+                                municipio</button>
+                        </div>
+                        <div class="col">
+                            <label for="">Capacidad</label>
+                            <input type="number" class="form-control mb-3" name="capacidad">
+                        </div>
+                        <div class="col">
+                            <label>Niveles</label>
+                            <input type="number" class="form-control mb-3" name="niveles">
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-primary mb-3 mt-4" type="submit">Guardar</button>
+                        </div>
+                    </div>
+
+                    <!-- Modal-->
+                
+                <div id="modal_municipio" class="modal fade">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Seleccione el municipio</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Municipio</th>
+                                            <th scope="col">seleccionar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for municipio in list_municipios %}
+                                        <tr>
+                                            <td>{{municipio.id}}</td>
+                                            <td>{{municipio.nombre}}</td>
+                                            <td><button type="button" class="btn btn-primary"
+                                                    onclick="selectMunicipio('{{municipio.id}}',' {{municipio.nombre}}')">Seleccionar</button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agregar Bootstrap JS y jQuery (Requeridos por Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+
+
+        function abrirModal() {
+            $('#modal_municipio').modal('show');
+        }
+
+        function selectMunicipio(id, municipio) {
+            $('#input_municipio_id').val(id);
+            $('#input_municipio').html(municipio);
+
+            cerrarModal();
+        }
+
+        function cerrarModal() {
+            $('#modal_municipio').modal('hide');
+        }
+
+
+    </script>
+</body>
+
+</html>
