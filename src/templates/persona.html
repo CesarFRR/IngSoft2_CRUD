@@ -29,6 +29,17 @@
 <body>
     <a href="{{ url_for('home') }}" class="btn btn-primary m-3">Inicio</a>
     <h1 class="text-center mt-5 mb-5 text-primary">Gestión de personas</h1>
+    {% set viviendas_actuales = [] %}
+    {% for persona in data %}
+    {% for vivienda in list_viviendas %}
+    {% if vivienda.id == persona.id_vivienda_actual %}
+    {% set valor = '(' ~ persona.id_vivienda_actual ~ ')-' ~ vivienda.direccion %}
+    {% set _ = viviendas_actuales.append(valor) %}
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
+
+
 
     <div class="container">
         <div class="card shadow">
@@ -44,6 +55,7 @@
                             <select class="form-select" id="sexo" name="t_doc">
                                 <option value="none" selected readonly hidden> </option>
                                 <option value="CC">CC</option>
+                                <option value="TI">TI</option>
                                 <option value="CE">CE</option>
                                 <option value="Pasaporte">Pasaporte</option>
                             </select>
@@ -71,14 +83,11 @@
                         <input type="number" class="form-control mb-3" name="tel_cel">
                     </div>
                     <div class="col">
-                        <label for='vivienda_actual'>ID de vivienda actual</label>
-                        <select id="id_municipio" class="form-control" name="vivienda_actual">
-                            {% for viviendas in list_viviendas %}
-                            {% if d.id_vivienda == vivienda.id %}
-                            <option value="{{vivienda.id}}" selected>{{vivienda.id}}</option>
-                            {% else %}
-                            <option value="{{vivienda.id}}">{{vivienda.nombre}}</option>
-                            {% endif %}
+                        <label for='vivienda_actual'>Vivienda actual</label>
+                        <select id="id_municipio" class="form-control" name="id_vivienda_actual">
+                            <option value="none" selected readonly hidden> </option>
+                            {% for vivienda in list_viviendas %}
+                            <option value="{{vivienda.id}}">({{vivienda.id}})-{{vivienda.direccion}}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -100,12 +109,13 @@
                         <th scope="col">Fecha de nacimiento</th>
                         <th scope="col">Sexo</th>
                         <th scope="col">Tel/Cel</th>
-                        <th scope="col">ID Vivienda actual</th>
+                        <th scope="col">Vivienda actual</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    {% for d in data %}
+                    {% for d in (data) %}
+                    
                     <tr>
                         <td>{{d.id}}</td>
                         <td>{{d.tipo_doc}}</td>
@@ -113,7 +123,7 @@
                         <td>{{d.fecha_nac}}</td>
                         <td>{{d.sexo}}</td>
                         <td>{{d.telefono}}</td>
-                        <td>{{d.id_vivienda_actual}}</td>
+                        <td>{{viviendas_actuales[loop.index0]}}</td>
                         <td><button class="btn btn-primary btn-sm" id="btn-edit{{d.id}}" data-bs-toggle="modal"
                                 data-bs-target="#modal{{d.id}}">Editar</button></td>
                         <td><a href="{{url_for('persona_delete', id=d.id)}}" class="btn btn-danger btn-sm">Borrar</a>
@@ -137,8 +147,16 @@
                                         <input type="number" class="form-control mb-3" name="id" value="{{d.id}}"
                                             readonly>
                                         <label for='tipo_doc'>Tipo de documento</label>
-                                        <input type="text" class="form-control mb-3" name="tipo_doc"
-                                            value="{{d.tipo_doc}}" readonly>
+                                            <select class="form-select" id="sexo" name="t_doc">
+                                                {% set tipodoc = ['CC','TI', 'CE','Pasaporte'] %}
+                                                {% for t in tipodoc %}
+                                                {% if t == d.tipo_doc %}
+                                                <option value="{{ t }}" selected>{{ t }}</option>
+                                                {% else %}
+                                                <option value="{{t}}">{{ t }}</option>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </select>
 
                                         <label for='nombre'>Nombre</label>
                                         <input type="text" class="form-control mb-3" name="nombre" value="{{d.nombre}}">
@@ -146,7 +164,7 @@
 
                                         <label for='fecha_nac'>Fecha de nacimiento</label>
                                         <input type="date" class="form-control mb-3" name="fecha_nac"
-                                            value="{{d.fecha_nac}}" readonly>
+                                            value="{{d.fecha_nac}}" >
 
                                         <label for='sexo'>Sexo</label>
                                         <select class="form-select" id="selectBox" name="sexo">
@@ -164,31 +182,30 @@
                                         <input type="number" class="form-control mb-3" name="telefono"
                                             value="{{d.telefono}}">
                                         <label for='vivienda_actual'>Vivienda actual</label>
-                                        <select id="id_municipio" class="form-control" name="vivienda_actual">
-                                            {% for viviendas in list_viviendas %}
+                                        <select id="vivienda_actual" class="form-control" name="id_vivienda_actual">
+                                            {% for vivienda in list_viviendas %}
                                             {% if d.id_vivienda == vivienda.id %}
-                                            <option value="{{vivienda.id}}" selected>{{vivienda.id}}</option>
+                                            <option value="{{vivienda.id}}" selected>
+                                                viviendas_actuales[loop.index0]</option>
                                             {% else %}
-                                            <option value="{{vivienda.id}}">{{vivienda.nombre}}</option>
+                                            <option value="{{vivienda.id}}">({{vivienda.id}})-{{vivienda.direccion}}
+                                            </option>
                                             {% endif %}
                                             {% endfor %}
                                         </select>
-                                        <input type="number" class="form-control mb-3" name="vivienda_actual"
-                                            value="{{d.id_vivienda_actual}}">
 
+
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                        </div>
+                                    </form>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                                </div>
-                                </form>
                             </div>
                         </div>
-                    </div>
 
 
 
-
-                    {% endfor %}
+                        {% endfor %}
 
                 </tbody>
 
