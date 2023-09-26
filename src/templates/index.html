@@ -40,7 +40,7 @@
 
     <div class="border">
         <br><br>
-        <h5 class="text-center ">Más opciones</h5>
+        <h5 class="text-center ">Gestionar posesiones y cabeza de familia</h5>
 
         <form action="/posesiones_add" method="get">
 
@@ -50,7 +50,7 @@
         <div style=" display: flex;
 justify-content: center;">
             <div class="">
-                <label for="id" class="">Ingrese su numero de documento</label>
+                <label for="id" class="">Ingrese su número de documento</label>
                 <input type="text" name="id" id="id_doc" autocomplete="off">
             </div>
 
@@ -66,7 +66,7 @@ justify-content: center;">
                     </a>
                 </div>
                 <div class="col-sm-2 ">
-                    <a class="btn btn-danger position-relative "  onclick="redirigir('/cdf/')">
+                    <a class="btn btn-danger position-relative " onclick="redirigir('/cdf/')">
                         Gestionar cabeza de familia (CDF)
                     </a>
                 </div>
@@ -77,10 +77,10 @@ justify-content: center;">
     <script>
         function redirigir(pagina) {
             var dato = document.getElementById('id_doc').value;
-            if(dato){
+            if (dato) {
                 window.location.href = pagina + "" + encodeURIComponent(dato);
             }
-            
+
         }
     </script>
 </body>
