@@ -64,6 +64,8 @@
                             <td>{{d.nombre}}</td>
                             <td><button class="btn btn-primary btn-sm" id="btn-edit{{d.id}}" data-bs-toggle="modal"
                                     data-bs-target="#modal{{d.id}}">Editar</button></td>
+                            <td><a href="{{url_for('municipio_delete', id=d.id)}}" class="btn btn-danger btn-sm">Borrar</a>
+                                    </td>
                         </tr>
 
                         <!-- modal -->
