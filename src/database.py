@@ -1,5 +1,5 @@
 import mysql.connector
-local = True
+local = False
 config = {
     'user': 'CesarFRR',
     'password': 'labcrud123',
