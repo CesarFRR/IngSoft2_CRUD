@@ -119,7 +119,7 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="/persona_edit/{{d.id}}" method="post">
+                                    <form action="/persona_edit/{{d.id}}" method="POST">
                                         <label for='id'>ID</label>
                                         <input type="number" class="form-control mb-3" name="id" value="{{d.id}}"
                                             disabled>
@@ -150,7 +150,7 @@
                                         </select>
 
                                         <label for=''>Teléfono o celular</label>
-                                        <input type="text" class="form-control mb-3" name="telefono"
+                                        <input type="number" class="form-control mb-3" name="telefono"
                                             value="{{d.telefono}}">
 
 
