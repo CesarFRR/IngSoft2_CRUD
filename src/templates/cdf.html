@@ -101,12 +101,11 @@
                                                 value="{{d.id_persona}}" disabled>
                                             <label for="id_cdf">Documento de Cabeza de familia:
                                                 {{d.nombre_persona2}}</label>
-                                            <input type="number" name="id_cdf" value="{{d.id_cdf}}">
+                                            <input class="form-control mb-3" type="number" name="id_cdf"
+                                                value="{{d.id_cdf}}">
                                             <label hidden for="fecha_registro">Fecha de registro</label>
                                             <input hidden display type="text" class="form-control mb-3"
-                                                name="fecha_registro"
-                                                value={document.getElementById('datePicker').value=new
-                                                Date().toDateInputValue()}>
+                                                name="fecha_registro" value="{{d.fecha_registro}}">
 
 
                                     </div>
