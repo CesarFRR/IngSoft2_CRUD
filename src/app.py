@@ -1,4 +1,5 @@
 from datetime import datetime
+from itertools import count
 from flask import Flask, render_template, request, redirect, url_for
 import os
 import database as db
@@ -96,7 +97,7 @@ def vivienda():
 @app.route('/vivienda_add', methods=['POST'])
 def vivienda_add():
     #print('SE LLEGÓ A VIVIENDA-ADD!', request.form)
-    
+
     direccion = request.form['direccion']
     id_municipio = int(request.form['id_municipio'])
     capacidad = int(request.form['capacidad'])
@@ -213,6 +214,11 @@ def posesiones_add():
     id_persona = int(request.form['id_persona'])
     id_vivienda = int(request.form['id_vivienda'])
     fecha_posesion =  datetime.now().strftime('%Y-%m-%d')
+    existen_count= _SQLtoDict(f"SELECT COUNT(*) AS cantidad_registros FROM posesiones WHERE id_persona = {id_persona} AND id_vivienda = {id_vivienda};")[0]
+
+    
+    if existen_count['cantidad_registros']>0:
+        return redirect(url_for('posesiones', id=id_persona))
     try:
         if all(x for x in request.form.values()):
             cursor = db.database.cursor()
@@ -231,6 +237,9 @@ def posesiones_edit(id):
     id_persona = int(request.form['id_persona'])
     id_vivienda = int(request.form['id_vivienda'])
     fecha_posesion = datetime.strptime(request.form['fecha_posesion'], '%Y-%m-%d').date()
+    existen_count= _SQLtoDict(f"SELECT COUNT(*) AS cantidad_registros FROM posesiones WHERE id_persona = {id_persona} AND id_vivienda = {id_vivienda};")[0]
+    if existen_count['cantidad_registros']>0:
+        return redirect(url_for('posesiones', id=id_persona))
     if all(x for x in request.form.values()):
         cursor = db.database.cursor()
         sql = "UPDATE posesiones SET id_persona = %s, id_vivienda = %s, fecha_posesion = %s WHERE id = %s"
