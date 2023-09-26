@@ -33,7 +33,8 @@ def persona():
     for record in myresult:
         insertObject.append(dict(zip(columnNames,  [x if x!=None else " " for x in record])))
     cursor.close()
-    return render_template('persona.html', data=insertObject)
+    list_viviendas = _SQLtoDict("SELECT * FROM viviendas")
+    return render_template('persona.html', data=insertObject, list_viviendas= list_viviendas)
 
 
 @app.route('/persona_add', methods=['POST'])
@@ -61,20 +62,22 @@ def persona_edit(id):
     print('ID DE PERSONA: --> ', id)
     print(request.form)
     campos = ['tipo_doc', 'nombre', 'fecha_nac', 'sexo', 'telefono', 'vivienda_actual']
-    new_id = request.form['id']
-    tipo_doc = request.form['tipo_doc']
-    nombre = request.form['nombre']
-    fecha_nac = request.form['fecha_nac']
-    sexo = request.form['sexo']
-    telefono = request.form['telefono']
-    vivienda_actual = request.form['vivienda_actual']
-
-    if all(x for x in request.form.values() if x not in {'telefono'}): #Telefono puede ser Null
+    resp = [(clave, request.form.get(clave, None)) for clave in campos if request.form.get(clave, None)!=None]
+    clear_data = tuple([r[1] for r in resp] + [id])
+    sql = "UPDATE personas SET "
+    for campo in resp:
+        sql += f"{campo[0]} = %s, "
+    sql = sql[:-2]
+    print('NUEVO SQL ---->___>_::', sql)    
+    sql += " WHERE id = %s"
+    try: #Telefono puede ser Null
         cursor = db.database.cursor()
-        sql = "UPDATE personas SET id = %s, tipo_doc = %s, nombre = %s, fecha_nac = %s, sexo = %s, telefono=%s, id_vivienda_actual = %s WHERE id = %s"
-        data = (new_id, tipo_doc, nombre, fecha_nac, sexo, telefono,vivienda_actual, id)
+        data = clear_data
+        print('el clear_data\n\n', clear_data, '\n\nEL SQLL ES:-->', sql, '\n\n\n', )
         cursor.execute(sql, data)
         db.database.commit()
+    except Exception as e:
+        print('error---->', e)
     return redirect(url_for('persona'))
 
 
