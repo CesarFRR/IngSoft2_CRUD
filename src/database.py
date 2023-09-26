@@ -21,4 +21,4 @@ else:
     database = mysql.connector.connect(**config)
 
 
-print('BBDD conectada!!', "Modo localhost!" if local else "Modo pythonanywhere!")
+#print('BBDD conectada!!', "Modo localhost!" if local else "Modo pythonanywhere!")

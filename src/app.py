@@ -26,7 +26,7 @@ def home(): return render_template('index.html')
 
 @app.route('/persona')
 def persona():
-    print('PETICION /persona !!')
+    #print('PETICION /persona !!')
     cursor = db.database.cursor()
     cursor.execute("SELECT * FROM personas")
     myresult = cursor.fetchall()
@@ -46,7 +46,7 @@ def persona_add():
     t_doc = request.form['t_doc']
     n_doc = int(request.form['n_doc'])
     nacimiento = datetime.strptime(request.form['nacimiento'], '%Y-%m-%d').date()
-    print( 'datos-->  ',request.form)
+    #print( 'datos-->  ',request.form)
     sexo = request.form['sexo']
     tel_cel = request.form.get('tel_cel')
     vivienda_actual =  int(request.form['id_vivienda_actual'])
@@ -74,8 +74,9 @@ def persona_edit(id):
         cursor.execute(sql, clear_data)
         db.database.commit()
         cursor.close()
-    except Exception as e:
-        print('error---->', e)
+    except :
+        #print('error---->', e)
+        pass
     return redirect(url_for('persona'))
 
 
@@ -97,13 +98,13 @@ def persona_delete(id):
 def vivienda():
     data = _SQLtoDict("SELECT v.*, m.nombre AS nombre_municipio FROM viviendas v LEFT JOIN municipios m ON v.id_municipio = m.id")
     list_municipios = _SQLtoDict("SELECT * FROM municipios")
-    print(list_municipios,'\n\n', data)
+    #print(list_municipios,'\n\n', data)
     return render_template('vivienda.html', list_municipios=list_municipios,data=data)
 
 
 @app.route('/vivienda_add', methods=['POST'])
 def vivienda_add():
-    #print('SE LLEGÓ A VIVIENDA-ADD!', request.form)
+    ##print('SE LLEGÓ A VIVIENDA-ADD!', request.form)
 
     direccion = request.form['direccion']
     id_municipio = int(request.form['id_municipio'])
@@ -277,7 +278,7 @@ def posesiones_delete(id, id_p):
 
 @app.route('/cdf/<string:id>', methods=["GET"])
 def cdf(id):
-    print('ESTA ES LA ID CDF: ---> ',  id)
+    #print('ESTA ES LA ID CDF: ---> ',  id)
     try:
         cursor = db.database.cursor()
         q="SELECT cdf.*, persona1.nombre AS nombre_persona1, persona2.nombre AS nombre_persona2 FROM cdf LEFT JOIN personas AS persona1 ON cdf.id_persona = persona1.id LEFT JOIN personas AS persona2 ON cdf.id_cdf = persona2.id WHERE cdf.id_persona =%s OR cdf.id_cdf =%s;"
@@ -285,8 +286,8 @@ def cdf(id):
         cursor.execute(q, data)
         myresult = cursor.fetchall()
 
-    except Exception as e:
-        print('ERROR SQL: ---> ', e)
+    except :
+        #print('ERROR SQL: ---> ', e)
         return render_template('index.html')
 
     #Convertir los datos a diccionario
@@ -348,8 +349,8 @@ def cdf_delete(id_r, id_p):
         cursor.execute(sql, data)
         db.database.commit()
         cursor.close()
-    except Exception as e:
-        print(e)
+    except :
+        pass
     return redirect(url_for('cdf', id=id_p))
 
 @app.route('/gobernar/<string:id>', methods=["GET"])
@@ -362,8 +363,8 @@ def gobernar(id):
         personas = _SQLtoDict("SELECT id, nombre FROM personas")
         municipios = _SQLtoDict("SELECT id, nombre FROM municipios")
 
-    except Exception as e:
-        print('ERROR EN GOBERNAR:-->', e)
+    except :
+        #print('ERROR EN GOBERNAR:-->', e)
         return render_template('index.html')
     return render_template('gobernar.html', data=data, id=id, personas=personas, municipios=municipios)
 
@@ -377,7 +378,7 @@ def gobernar_add():
 
             existen_count= _SQLtoDict(f"SELECT COUNT(*) AS cantidad_registros FROM gobernadores WHERE id_persona = {id_persona} AND id_municipio = {id_municipio};")[0]['cantidad_registros']
             if existen_count>0:
-                print('existen repetidos al agregar, se aviso desde backend!!')
+                #print('existen repetidos al agregar, se aviso desde backend!!')
                 return redirect(url_for('posesiones', id=-1))
             cursor = db.database.cursor()
             sql = "INSERT INTO gobernadores (id_persona, id_municipio, fecha_registro) VALUES (%s, %s, %s)"
@@ -385,8 +386,8 @@ def gobernar_add():
             cursor.execute(sql, data)
             db.database.commit()
             cursor.close()
-    except Exception as e:
-        print(e)
+    except :
+        pass
     return redirect(url_for('gobernar', id=-1))
 
 
@@ -398,7 +399,7 @@ def gobernar_edit(id):
     if (id_persona and id_vivienda):
          existen_count= _SQLtoDict(f"SELECT COUNT(*) AS cantidad_registros FROM posesiones WHERE id_persona = {id_persona} AND id_vivienda = {id_vivienda};")[0]
          if existen_count['cantidad_registros']>0:
-            print('existen repetidos al editar, se aviso desde backend!!')
+            #print('existen repetidos al editar, se aviso desde backend!!')
             return redirect(url_for('gobernar', id=-1))
 
     try: 
@@ -408,13 +409,13 @@ def gobernar_edit(id):
         cursor.execute(sql, data)
         db.database.commit()
         cursor.close()
-    except Exception as e:
-        print(e)
+    except :
+        pass
     return redirect(url_for('gobernar', id=-1))
 
 @app.route('/gobernar_delete/<string:id_r>/<string:id_p>')
 def gobernar_delete(id_r, id_p):
-    print('datos..--->', id_r, type(id_r), id_p, type(id_p), '\n\n')
+    #print('datos..--->', id_r, type(id_r), id_p, type(id_p), '\n\n')
     cursor = db.database.cursor()
     sql = "DELETE FROM gobernadores WHERE id=%s"
     data = (id_r,)
@@ -422,8 +423,9 @@ def gobernar_delete(id_r, id_p):
         cursor.execute(sql, data)
         db.database.commit()
         cursor.close()
-    except Exception as e:
-        print('error en gobernado delete', e)
+    except :
+        #print('error en gobernado delete', e)
+        pass
     return redirect(url_for('gobernar', id=-1))
 
 
