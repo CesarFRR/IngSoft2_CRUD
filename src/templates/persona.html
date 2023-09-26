@@ -18,6 +18,11 @@
             margin: 0;
         }
     </style>
+    <script>
+        function returnToPreviousPage() {
+            window.history.back();
+        }
+    </script>
 
 </head>
 
@@ -28,7 +33,7 @@
     <div class="container">
         <div class="card shadow">
             <div class="card-body">
-                <form action="/persona_add" method="POST">
+                <form action="/persona_add" method="POST" onsubmit="returnToPreviousPage;">
                     <div class="row mb-3">
                         <div class="col">
                             <label for='nombre'>Nombre</label>
