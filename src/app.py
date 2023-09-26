@@ -59,6 +59,8 @@ def persona_add():
 @app.route('/persona_edit/<string:id>', methods=["POST"])
 def persona_edit(id):
     print('ID DE PERSONA: --> ', id)
+    print(request.form)
+    campos = ['tipo_doc', 'nombre', 'fecha_nac', 'sexo', 'telefono', 'vivienda_actual']
     new_id = request.form['id']
     tipo_doc = request.form['tipo_doc']
     nombre = request.form['nombre']
