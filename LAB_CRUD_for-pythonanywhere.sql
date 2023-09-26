@@ -8,19 +8,19 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema mydb
 -- -----------------------------------------------------
 -- -----------------------------------------------------
--- Schema lab_crud
+-- Schema CesarFRR$lab_crud
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema lab_crud
+-- Schema CesarFRR$lab_crud
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `lab_crud` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
-USE `lab_crud` ;
+CREATE SCHEMA IF NOT EXISTS `CesarFRR$lab_crud` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `CesarFRR$lab_crud` ;
 
 -- -----------------------------------------------------
--- Table `lab_crud`.`municipios`
+-- Table `CesarFRR$lab_crud`.`municipios`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `lab_crud`.`municipios` (
+CREATE TABLE IF NOT EXISTS `CesarFRR$lab_crud`.`municipios` (
   `id` INT NOT NULL,
   `nombre` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`))
@@ -30,9 +30,9 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `lab_crud`.`viviendas`
+-- Table `CesarFRR$lab_crud`.`viviendas`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `lab_crud`.`viviendas` (
+CREATE TABLE IF NOT EXISTS `CesarFRR$lab_crud`.`viviendas` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `direccion` VARCHAR(50) NOT NULL,
   `id_municipio` INT NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `lab_crud`.`viviendas` (
   INDEX `municipios` (`id_municipio` ASC) VISIBLE,
   CONSTRAINT `viviendas_ibfk_1`
     FOREIGN KEY (`id_municipio`)
-    REFERENCES `lab_crud`.`municipios` (`id`))
+    REFERENCES `CesarFRR$lab_crud`.`municipios` (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8mb4
@@ -50,9 +50,9 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `lab_crud`.`personas`
+-- Table `CesarFRR$lab_crud`.`personas`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `lab_crud`.`personas` (
+CREATE TABLE IF NOT EXISTS `CesarFRR$lab_crud`.`personas` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `tipo_doc` TEXT NOT NULL,
   `nombre` TEXT NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `lab_crud`.`personas` (
   INDEX `vivienda_actual` (`id_vivienda_actual` ASC) VISIBLE,
   CONSTRAINT `personas_ibfk_1`
     FOREIGN KEY (`id_vivienda_actual`)
-    REFERENCES `lab_crud`.`viviendas` (`id`))
+    REFERENCES `CesarFRR$lab_crud`.`viviendas` (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 21341413
 DEFAULT CHARACTER SET = utf8mb4
@@ -72,9 +72,9 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `lab_crud`.`cdf`
+-- Table `CesarFRR$lab_crud`.`cdf`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `lab_crud`.`cdf` (
+CREATE TABLE IF NOT EXISTS `CesarFRR$lab_crud`.`cdf` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `id_persona` INT NOT NULL,
   `id_cdf` INT NOT NULL,
@@ -84,10 +84,10 @@ CREATE TABLE IF NOT EXISTS `lab_crud`.`cdf` (
   INDEX `id_cdf` (`id_cdf` ASC) VISIBLE,
   CONSTRAINT `cdf_ibfk_1`
     FOREIGN KEY (`id_persona`)
-    REFERENCES `lab_crud`.`personas` (`id`),
+    REFERENCES `CesarFRR$lab_crud`.`personas` (`id`),
   CONSTRAINT `cdf_ibfk_2`
     FOREIGN KEY (`id_cdf`)
-    REFERENCES `lab_crud`.`personas` (`id`))
+    REFERENCES `CesarFRR$lab_crud`.`personas` (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8mb4
@@ -95,9 +95,9 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `lab_crud`.`posesiones`
+-- Table `CesarFRR$lab_crud`.`posesiones`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `lab_crud`.`posesiones` (
+CREATE TABLE IF NOT EXISTS `CesarFRR$lab_crud`.`posesiones` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `id_persona` INT NOT NULL,
   `id_vivienda` INT NOT NULL,
@@ -107,10 +107,10 @@ CREATE TABLE IF NOT EXISTS `lab_crud`.`posesiones` (
   INDEX `id_vivienda` (`id_vivienda` ASC) VISIBLE,
   CONSTRAINT `posesiones_ibfk_1`
     FOREIGN KEY (`id_persona`)
-    REFERENCES `lab_crud`.`personas` (`id`),
+    REFERENCES `CesarFRR$lab_crud`.`personas` (`id`),
   CONSTRAINT `posesiones_ibfk_2`
     FOREIGN KEY (`id_vivienda`)
-    REFERENCES `lab_crud`.`viviendas` (`id`))
+    REFERENCES `CesarFRR$lab_crud`.`viviendas` (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 10
 DEFAULT CHARACTER SET = utf8mb4
@@ -118,10 +118,10 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `lab_crud`.`gobernadores`
+-- Table `CesarFRR$lab_crud`.`gobernadores`
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `lab_crud`.`gobernadores` (
+CREATE TABLE IF NOT EXISTS `CesarFRR$lab_crud`.`gobernadores` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `id_persona` INT NOT NULL,
   `id_municipio` INT NOT NULL,
@@ -131,10 +131,10 @@ CREATE TABLE IF NOT EXISTS `lab_crud`.`gobernadores` (
   INDEX `id_municipio` (`id_municipio` ASC) VISIBLE,
   CONSTRAINT `gobernadores_ibfk_1`
     FOREIGN KEY (`id_persona`)
-    REFERENCES `lab_crud`.`personas` (`id`),
+    REFERENCES `CesarFRR$lab_crud`.`personas` (`id`),
   CONSTRAINT `gobernadores_ibfk_2`
     FOREIGN KEY (`id_municipio`)
-    REFERENCES `lab_crud`.`municipios` (`id`))
+    REFERENCES `CesarFRR$lab_crud`.`municipios` (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 10
 DEFAULT CHARACTER SET = utf8mb4
@@ -147,7 +147,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
 
-INSERT INTO MUNICIPIOS (id, nombre)
+INSERT INTO municipios (id, nombre)
 VALUES
     (1, 'Bogotá'),
     (2, 'Soacha'),
@@ -170,7 +170,7 @@ VALUES
     (19, 'Gachancipá'),
     (20, 'Nemocón');
 
-INSERT INTO VIVIENDAS (id, direccion, id_municipio, capacidad, niveles)
+INSERT INTO viviendas(id, direccion, id_municipio, capacidad, niveles)
 VALUES
     (1, 'Calle 123', 1, 4, 2),
     (2, 'Avenida Principal', 2, 6, 3),
@@ -195,7 +195,7 @@ VALUES
 
 
 -- Insertar filas en la tabla PERSONAS
-INSERT INTO PERSONAS (id, tipo_doc, nombre, fecha_nac, sexo, telefono, id_vivienda_actual)
+INSERT INTO personas(id, tipo_doc, nombre, fecha_nac, sexo, telefono, id_vivienda_actual)
 VALUES
     (1, 'DNI', 'Juan Pérez', '1990-05-15', 'Masculino', 123456789, 1),
     (2, 'Cédula', 'María García', '1985-10-20', 'Femenino', NULL, 2),
@@ -220,7 +220,7 @@ VALUES
 
 
 -- Insertar filas en la tabla CDF
-INSERT INTO CDF (id_persona, id_cdf, fecha_registro)
+INSERT INTO cdf(id_persona, id_cdf, fecha_registro)
 VALUES
     (2, 1, '2023-08-01'),
     (3, 1, '2023-08-02'),
@@ -269,7 +269,7 @@ VALUES
 
 
 -- Insertar filas en la tabla gobernadores
-INSERT INTO Gobernadores (id_persona, id_municipio, fecha_registro)
+INSERT INTO gobernadores (id_persona, id_municipio, fecha_registro)
 VALUES
     (1, 1, '2023-01-01'),
     (2, 2, '2023-02-01'),
