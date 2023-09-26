@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cabeza de Familia</title>
+    <title>Gobernabilidad</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
@@ -24,7 +24,7 @@
 
 <body>
     <a href="{{ url_for('home') }}" class="btn btn-primary m-3">Inicio</a>
-    <h1 class="text-center mt-5 mb-5 text-primary">Gestión de cabezas de familia (CDF)</h1>
+    <h1 class="text-center mt-5 mb-5 text-primary">Gestión de gobernantes</h1>
 
     <div class="container">
         <div class="card shadow">
@@ -32,12 +32,12 @@
                 <form action="/cdf_add" method="POST">
                     <div class="row mb-3">
                         <div class="col">
-                            <label for='id_persona'>ID de la persona usuario</label>
+                            <label for='id_persona'>ID del municipio</label>
                             <input type="number" class="form-control mb-3" name="id_persona" value="{{data_pred['id']}}"
                                 readonly>
                         </div>
                         <div class="col">
-                            <label>ID de la persona cabeza de familia (CDF)</label>
+                            <label>Número de documento del gobernante</label>
                             <input type="number" class="form-control mb-3" name="id_cdf">
                         </div>
                         <div class="col">
@@ -54,10 +54,10 @@
                     <thead>
                         <tr>
                             <th scope="col"># Registro</th>
-                            <th scope="col">Documento</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Documento de Cabeza de familia</th>
-                            <th scope="col">Nombre de Cabeza de familia</th>
+                            <th scope="col">ID Municipio</th>
+                            <th scope="col">Nombre Municipio</th>
+                            <th scope="col">Documento de Gobernante</th>
+                            <th scope="col">Nombre de Gobernante</th>
                             <th scope="col">Fecha del registro</th>
                             <th scope="col">Editar</th>
                             <th scope="col">Borrar</th>
@@ -68,10 +68,10 @@
                         {% for d in data %}
                         <tr>
                             <td>{{d.id}}</td>
-                            <td>{{d.id_persona}}</td>
-                            <td>{{d.nombre_persona1}}</td>
-                            <td>{{d.id_cdf}}</td>
-                            <td>{{d.nombre_persona2}}</td>
+                            <td>{{d.id_municipio}}</td>
+                            <td>{{d.nombre_municipio}}</td>
+                            <td>{{d.id_gobernante}}</td>
+                            <td>{{d.nombre_gobernante}}</td>
                             <td>{{d.fecha_registro}}</td>
 
                             <td><button class="btn btn-primary btn-sm" id="btn-edit{{d.id}}" data-bs-toggle="modal"
@@ -96,10 +96,10 @@
                                             <label for="id"># Registro</label>
                                             <input type="text" class="form-control mb-3" name="id" value="{{d.id}}"
                                                 readonly>
-                                            <label for="id_persona">ID Persona: {{d.nombre_persona1}}</label>
+                                            <label for="id_persona">ID Municipio: {{d.nombre_persona1}}</label>
                                             <input type="text" class="form-control mb-3" name="id_persona"
                                                 value="{{d.id_persona}}" readonly>
-                                            <label for="id_cdf">Documento de Cabeza de familia:
+                                            <label for="id_cdf">Documento de gobernante:
                                                 {{d.nombre_persona2}}</label>
                                             <input class="form-control mb-3" type="number" name="id_cdf"
                                                 value="{{d.id_cdf}}">
@@ -116,10 +116,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
                         {% endfor %}
 
                     </tbody>
