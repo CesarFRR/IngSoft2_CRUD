@@ -81,7 +81,8 @@
                                     <div class="modal-body">
                                         <form action="/municipio_edit/{{d.id}}" method="post">
                                             <label for="id">ID</label>
-                                            <input type="text" class="form-control mb-3" name="id" value="{{d.id}}">
+                                            <input type="text" class="form-control mb-3" name="id" value="{{d.id}}"
+                                                readonly>
                                             <label for="nombre">Nombre del municipio</label>
                                             <input type="text" class="form-control mb-3" name="nombre"
                                                 value="{{d.nombre}}">
