@@ -35,7 +35,7 @@
                         <div class="col">
                             <label for="id_municipio">Municipio</label>
                             <select id="id_municipio" class="form-control" name="id_municipio" id="form_municipio">
-                                <option value="" disabled selected>Seleccione municipio</option>
+                                <option value="" readonly selected>Seleccione municipio</option>
                                 {% for municipio in list_municipios %}
                                 <option value="{{municipio.id}}">{{municipio.nombre}}</option>
                                 {% endfor %}
@@ -101,7 +101,7 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="/vivienda_edit/{{d.id}}" method="post">
+                                        <form action="/vivienda_edit/{{d.id}}" method="POST">
                                             <label for="id"># Registro</label>
                                             <input type="number" class="form-control mb-3" name="id" value="{{d.id}}"
                                                 readonly>
