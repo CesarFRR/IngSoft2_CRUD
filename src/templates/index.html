@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<style>
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-</style>
+
 
 <head>
     <meta charset="UTF-8">
@@ -18,7 +12,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
-
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -58,7 +58,7 @@
 justify-content: center;">
             <div class="">
                 <label for="id" class="">Ingrese su número de documento</label>
-                <input type="number" name="id" id="id_doc" autocomplete="off">
+                <input type="number" class="form-control mb-3" name="id" id="id_doc" autocomplete="off">
             </div>
 
 
