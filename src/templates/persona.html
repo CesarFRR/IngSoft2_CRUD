@@ -156,6 +156,15 @@
                                         <input type="number" class="form-control mb-3" name="telefono"
                                             value="{{d.telefono}}">
                                         <label for='vivienda_actual'>Vivienda actual</label>
+                                        <select id="id_municipio" class="form-control" name="vivienda_actual">
+                                            {% for viviendas in list_viviendas %}
+                                            {% if d.id_vivienda == vivienda.id %}
+                                            <option value="{{vivienda.id}}" selected>{{vivienda.id}}</option>
+                                            {% else %}
+                                            <option value="{{vivienda.id}}">{{vivienda.nombre}}</option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
                                         <input type="number" class="form-control mb-3" name="vivienda_actual"
                                             value="{{d.id_vivienda_actual}}">
 
